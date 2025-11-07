@@ -4,10 +4,6 @@ import com.java.Spring_Initializr.Enum.TipoConta;
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
-/**
- * Record para receber dados de criação/atualização de Cliente.
- * Substitui a classe tradicional com @Data do Lombok.
- */
 public record ClienteRequest(
 
         @NotBlank(message = "O nome é obrigatório")
@@ -31,9 +27,7 @@ public record ClienteRequest(
         LocalDate dataNascimento,
 
         @NotNull(message = "O tipo de conta é obrigatório")
-        TipoConta tipoConta, // Enum TipoConta
+        TipoConta tipoConta,
 
-        // Opcional: Se quiser controlar o status ativo via requisição
-        Boolean ativo
-
+        Boolean ativo // Não precisa de @NotNull, pois o DTO aceita null no request
 ) {}

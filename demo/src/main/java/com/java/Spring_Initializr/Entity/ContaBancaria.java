@@ -35,6 +35,6 @@ public class ContaBancaria {
     private TipoConta tipoConta;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "clienteId", nullable = false)
+    @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 }

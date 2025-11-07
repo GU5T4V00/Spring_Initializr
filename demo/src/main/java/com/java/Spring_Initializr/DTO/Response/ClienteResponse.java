@@ -15,6 +15,7 @@ public record ClienteResponse(
         String cpf,
         LocalDate dataNascimento,
         TipoConta tipoConta,
-        Boolean ativo
+        Boolean ativo,
+        List<ContaBancariaResponse> contasBancarias
 
 ) {}
