@@ -1,21 +1,36 @@
 package com.java.Spring_Initializr.Mapper;
 
 import com.java.Spring_Initializr.Entity.Cliente;
+import com.java.Spring_Initializr.Entity.ContaBancaria;
 import com.java.Spring_Initializr.DTO.Request.ClienteRequest;
 import com.java.Spring_Initializr.DTO.Response.ClienteResponse;
+import com.java.Spring_Initializr.DTO.Response.ContaBancariaResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+import java.util.List;
+
+@Mapper(componentModel = "spring",
+        unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        uses = {ContaBancariaMapper.class}
+)
 public interface ClienteMapper {
 
     // RequestDTO para Entidade
-    // Note que ignoramos o ID (que será gerado) e o 'ativo' (que tem default na Entity)
     @Mapping(target = "idCliente", ignore = true)
     @Mapping(target = "ativo", ignore = true)
+    @Mapping(target = "contasBancarias", ignore = true)
     Cliente toEntity(ClienteRequest dto);
 
-    // Entidade para ResponseDTO (Não mapeamos a senha por segurança)
+    // Entidade para ResponseDTO
+    @Mapping(target = "senha", ignore = true)
     ClienteResponse toResponseDTO(Cliente cliente);
+
+    // Mapeamento de lista de Clientes
+    List<ClienteResponse> toResponseDTOList(List<Cliente> clientes);
+
+    // Métodos delegados para ContaBancariaMapper (Necessários para OneToMany)
+    ContaBancariaResponse contaToResponseDTO(ContaBancaria conta);
+    List<ContaBancariaResponse> contasToResponseDTOList(List<ContaBancaria> contas);
 }
